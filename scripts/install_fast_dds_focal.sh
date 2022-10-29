@@ -11,6 +11,9 @@ wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | 
 echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
 sudo apt-get update
 
+sudo rm -rf ~/Fast-DDS
+sudo rm -rf ~/Fast-DDS-Gen
+
 mkdir ~/Fast-DDS
 
 cd ~/Fast-DDS
@@ -44,6 +47,7 @@ export LD_LIBRARY_PATH=/usr/local/lib/
 sudo mkdir /opt/gradle
 cd /opt/gradle
 sudo wget https://services.gradle.org/distributions/gradle-7.5.1-bin.zip
+sudo rm -rf /opt/gradle/gradle-7.5.1
 sudo unzip -d /opt/gradle gradle-7.5.1-bin.zip
 sudo rm -f gradle-7.5.1-bin.zip
 
@@ -54,7 +58,7 @@ source ~/.bashrc
 export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin
 
 cd ~
-git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git
+git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git -b v2.2.0
 cd Fast-DDS-Gen
 gradle assemble
 
