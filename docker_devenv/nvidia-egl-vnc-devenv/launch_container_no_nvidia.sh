@@ -2,7 +2,7 @@
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
 
-NAME_IMAGE='nvidia_devenv_ws'
+NAME_IMAGE='nvidia_egl_desktop_devenv_ws'
 
 # Make Container
 if [ ! "$(docker image ls -q ${NAME_IMAGE})" ]; then
@@ -22,8 +22,8 @@ fi
 if [ ! $# -ne 1 ]; then
 	if [ "commit" = $1 ]; then
 		echo 'Now commiting docker container...'
-		docker commit nvidia_devenv_docker nvidia_devenv_ws:latest
-		CONTAINER_ID=$(docker ps -a | grep nvidia_devenv_docker | awk '{print $1}')
+		docker commit nvidia_egl_desktop_devenv_docker nvidia_egl_desktop_devenv_ws:latest
+		CONTAINER_ID=$(docker ps -a | grep nvidia_egl_desktop_devenv_docker | awk '{print $1}')
 		docker stop $CONTAINER_ID
 		docker rm $CONTAINER_ID
 		exit
@@ -39,7 +39,7 @@ fi
 chmod a+r $XAUTH
 
 DOCKER_OPT=""
-DOCKER_NAME="nvidia_devenv_docker"
+DOCKER_NAME="nvidia_egl_desktop_devenv_docker"
 DOCKER_WORK_DIR="/home/${USER}"
 
 ## For XWindow
@@ -73,7 +73,7 @@ fi
 
 ## Allow X11 Connection
 xhost +local:`hostname`-Docker
-CONTAINER_ID=$(docker ps -a | grep nvidia_devenv_ws: | awk '{print $1}')
+CONTAINER_ID=$(docker ps -a | grep nvidia_egl_desktop_devenv_ws: | awk '{print $1}')
 
 # Run Container
 if [ ! "$CONTAINER_ID" ]; then
@@ -83,20 +83,20 @@ if [ ! "$CONTAINER_ID" ]; then
 				--env=TERM=xterm-256color \
 				--name=${DOCKER_NAME} \
 				--entrypoint "/usr/bin/supervisord" \
-				nvidia_devenv_ws:latest
+				nvidia_egl_desktop_devenv_ws:latest
 		else
 			docker run ${DOCKER_OPT} \
 				--env=TERM=xterm-256color \
 				--name=${DOCKER_NAME} \
 				--entrypoint "bash" \
-				nvidia_devenv_ws:latest
+				nvidia_egl_desktop_devenv_ws:latest
 		fi
 	else
 		docker run ${DOCKER_OPT} \
 			--env=TERM=xterm-256color \
 			--name=${DOCKER_NAME} \
 			--entrypoint "bash" \
-			nvidia_devenv_ws:latest
+			nvidia_egl_desktop_devenv_ws:latest
 	fi
 else
 	docker start $CONTAINER_ID

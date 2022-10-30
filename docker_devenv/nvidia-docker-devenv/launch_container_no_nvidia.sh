@@ -10,7 +10,7 @@ if [ ! "$(docker image ls -q ${NAME_IMAGE})" ]; then
 		if [ "setup" = $1 ]; then
 			echo "Image ${NAME_IMAGE} does not exist."
 			echo 'Now building image without proxy...'
-			docker build --file=./nvidia-egl-desktop-ros2/foxy/Dockerfile -t $NAME_IMAGE . --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=$USER
+			docker build --file=./Dockerfile -t $NAME_IMAGE . --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg UNAME=$USER
 		fi
 	else
 		echo "Docker image not found. Please setup first!"
@@ -45,26 +45,17 @@ DOCKER_WORK_DIR="/home/${USER}"
 ## For XWindow
 DOCKER_OPT="${DOCKER_OPT} \
         --env=QT_X11_NO_MITSHM=1 \
+        --volume=/tmp/.X11-unix:/tmp/.X11-unix:rw \
         --volume=/home/${USER}:/home/${USER}/host_home:rw \
         --env=XAUTHORITY=${XAUTH} \
         --volume=${XAUTH}:${XAUTH} \
         --env=DISPLAY=${DISPLAY} \
-		--shm-size=1024m \
-		-e SIZEW=1920 \
-		-e SIZEH=1080 \
-		-e PASSWD=mypasswd \
-		-e BASIC_AUTH_PASSWORD=mypasswd \
-		-e NOVNC_ENABLE=true \
-		-p 6080:8080 
         -w ${DOCKER_WORK_DIR} \
         -u ${USER} \
         --hostname `hostname`-Docker \
         --add-host `hostname`-Docker:127.0.1.1"
 
 DOCKER_OPT="${DOCKER_OPT} --privileged -it "
-
-## For nvidia-docker
-DOCKER_OPT="${DOCKER_OPT} --gpus all "
 
 # Device
 if [ ! $# -ne 1 ]; then
@@ -80,27 +71,13 @@ CONTAINER_ID=$(docker ps -a | grep nvidia_devenv_ws: | awk '{print $1}')
 
 # Run Container
 if [ ! "$CONTAINER_ID" ]; then
-	if [ ! $# -ne 1 ]; then
-		if [ "setup" = $1 ]; then
-			docker run ${DOCKER_OPT} \
-				--env=TERM=xterm-256color \
-				--name=${DOCKER_NAME} \
-				--entrypoint "/usr/bin/supervisord" \
-				nvidia_devenv_ws:latest
-		else
-			docker run ${DOCKER_OPT} \
-				--env=TERM=xterm-256color \
-				--name=${DOCKER_NAME} \
-				--entrypoint "bash" \
-				nvidia_devenv_ws:latest
-		fi
-	else
-		docker run ${DOCKER_OPT} \
-			--env=TERM=xterm-256color \
-			--name=${DOCKER_NAME} \
-			--entrypoint "bash" \
-			nvidia_devenv_ws:latest
-	fi
+	docker run ${DOCKER_OPT} \
+		--shm-size=1gb \
+		--env=TERM=xterm-256color \
+		--net=host \
+		--name=${DOCKER_NAME} \
+		nvidia_devenv_ws:latest \
+		/bin/bash
 else
 	docker start $CONTAINER_ID
 	docker exec -it $CONTAINER_ID /bin/bash
