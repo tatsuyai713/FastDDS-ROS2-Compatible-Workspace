@@ -2,7 +2,7 @@
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 
 
-NAME_IMAGE='nvidia_egl_desktop_devenv_ws'
+NAME_IMAGE="nvidia_egl_desktop_devenv_ws_${USER}"
 
 # Make Container
 if [ ! "$(docker image ls -q ${NAME_IMAGE})" ]; then
@@ -22,15 +22,26 @@ fi
 if [ ! $# -ne 1 ]; then
 	if [ "commit" = $1 ]; then
 		echo 'Now commiting docker container...'
-		docker commit nvidia_egl_desktop_devenv_docker nvidia_egl_desktop_devenv_ws:latest
-		CONTAINER_ID=$(docker ps -a | grep nvidia_egl_desktop_devenv_docker | awk '{print $1}')
+		docker commit nvidia_egl_desktop_devenv_docker_${USER} nvidia_egl_desktop_devenv_ws_${USER}:latest
+		CONTAINER_ID=$(docker ps -a | grep nvidia_egl_desktop_devenv_docker_${USER} | awk '{print $1}')
 		docker stop $CONTAINER_ID
 		docker rm $CONTAINER_ID
 		exit
 	fi
 fi
 
-XAUTH=/tmp/.docker.xauth
+# Stop
+if [ ! $# -ne 1 ]; then
+	if [ "stop" = $1 ]; then
+		echo 'Now stopping docker container...'
+		CONTAINER_ID=$(docker ps -a | grep nvidia_egl_desktop_devenv_docker_${USER} | awk '{print $1}')
+		docker stop $CONTAINER_ID
+		docker rm $CONTAINER_ID -f
+		exit
+	fi
+fi
+
+XAUTH=/tmp/.docker_${USER}.xauth
 touch $XAUTH
 xauth_list=$(xauth nlist :0 | sed -e 's/^..../ffff/')
 if [ ! -z "$xauth_list" ];  then
@@ -39,7 +50,7 @@ fi
 chmod a+r $XAUTH
 
 DOCKER_OPT=""
-DOCKER_NAME="nvidia_egl_desktop_devenv_docker"
+DOCKER_NAME="nvidia_egl_desktop_devenv_docker_${USER}"
 DOCKER_WORK_DIR="/home/${USER}"
 
 ## For XWindow
@@ -55,11 +66,11 @@ DOCKER_OPT="${DOCKER_OPT} \
 		-e PASSWD=mypasswd \
 		-e BASIC_AUTH_PASSWORD=mypasswd \
 		-e NOVNC_ENABLE=true \
-		-p 6080:8080 
+		-p $(id -u):8080 \
         -w ${DOCKER_WORK_DIR} \
         -u ${USER} \
-        --hostname `hostname`-Docker \
-        --add-host `hostname`-Docker:127.0.1.1"
+        --hostname `hostname`-Docker-${USER} \
+        --add-host `hostname`-Docker-${USER}:127.0.1.1"
 
 DOCKER_OPT="${DOCKER_OPT} --privileged -it "
 
@@ -72,8 +83,8 @@ if [ ! $# -ne 1 ]; then
 fi
 
 ## Allow X11 Connection
-xhost +local:`hostname`-Docker
-CONTAINER_ID=$(docker ps -a | grep nvidia_egl_desktop_devenv_ws: | awk '{print $1}')
+xhost +local:`hostname`-Docker-${USER}
+CONTAINER_ID=$(docker ps -a | grep nvidia_egl_desktop_devenv_ws_${USER}: | awk '{print $1}')
 
 # Run Container
 if [ ! "$CONTAINER_ID" ]; then
@@ -83,25 +94,25 @@ if [ ! "$CONTAINER_ID" ]; then
 				--env=TERM=xterm-256color \
 				--name=${DOCKER_NAME} \
 				--entrypoint "/usr/bin/supervisord" \
-				nvidia_egl_desktop_devenv_ws:latest
+				nvidia_egl_desktop_devenv_ws_${USER}:latest
 		else
 			docker run ${DOCKER_OPT} \
 				--env=TERM=xterm-256color \
 				--name=${DOCKER_NAME} \
 				--entrypoint "bash" \
-				nvidia_egl_desktop_devenv_ws:latest
+				nvidia_egl_desktop_devenv_ws_${USER}:latest
 		fi
 	else
 		docker run ${DOCKER_OPT} \
 			--env=TERM=xterm-256color \
 			--name=${DOCKER_NAME} \
 			--entrypoint "bash" \
-			nvidia_egl_desktop_devenv_ws:latest
+			nvidia_egl_desktop_devenv_ws_${USER}:latest
 	fi
 else
 	docker start $CONTAINER_ID
 	docker exec -it $CONTAINER_ID /bin/bash
 fi
 
-xhost -local:`hostname`-Docker
+xhost -local:`hostname`-Docker-${USER}
 
