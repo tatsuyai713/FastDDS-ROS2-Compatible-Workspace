@@ -21,6 +21,14 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/' >> ~/.bashrc
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib/
 
 cd ~/Fast-DDS
+wget https://github.com/foonathan/memory/archive/refs/tags/v0.7-2.tar.gz -O memory-0.7-2.tar.gz
+tar xvf memory-0.7-2.tar.gz
+mkdir memory-0.7-2/build
+cd memory-0.7-2/build
+sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON
+sudo cmake --build . --target install
+
+cd ~/Fast-DDS
 wget https://github.com/eProsima/foonathan_memory_vendor/archive/refs/tags/v1.2.1.tar.gz -O foonathan_memory_vendor-1.2.1.tar.gz
 tar xvf foonathan_memory_vendor-1.2.1.tar.gz
 mkdir foonathan_memory_vendor-1.2.1/build
