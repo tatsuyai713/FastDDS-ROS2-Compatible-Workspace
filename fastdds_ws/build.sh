@@ -1,8 +1,8 @@
 #!/bin/bash
 
-rm -r ./build_x86_64
-mkdir ./build_x86_64
-cd build_x86_64
+rm -r ./build
+mkdir ./build
+cd build
 
 cmake ..
 make -j4
