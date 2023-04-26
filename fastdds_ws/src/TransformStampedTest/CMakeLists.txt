@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.16.3)
 
-project(DDSPointCloudTest VERSION 1 LANGUAGES CXX)
+project(DDSTransformStampedTest VERSION 1 LANGUAGES CXX)
 
 # Find requirements
 if(NOT fastcdr_FOUND)
@@ -48,15 +48,15 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
 #     endif()
 # endif()
 
-message(STATUS "Configuring PointCloud example...")
+message(STATUS "Configuring TransformStamped example...")
 file(GLOB DDS_HELLOWORLD_TEST_SOURCES_CXX "*.cxx")
 file(GLOB DDS_HELLOWORLD_TEST_SOURCES_CPP "*.cpp")
 
-add_executable(DDSPointCloudTest ${DDS_HELLOWORLD_TEST_SOURCES_CXX} ${DDS_HELLOWORLD_TEST_SOURCES_CPP})
-target_compile_definitions(DDSPointCloudTest PRIVATE
+add_executable(DDSTransformStampedTest ${DDS_HELLOWORLD_TEST_SOURCES_CXX} ${DDS_HELLOWORLD_TEST_SOURCES_CPP})
+target_compile_definitions(DDSTransformStampedTest PRIVATE
     $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
     $<$<BOOL:${INTERNAL_DEBUG}>:__INTERNALDEBUG> # Internal debug activated.
 )
-target_link_libraries(DDSPointCloudTest std_msgs sensor_msgs fastrtps fastcdr fastdds::optionparser)
-install(TARGETS DDSPointCloudTest
-    RUNTIME DESTINATION examples/cpp/dds/PointCloudTest/${BIN_INSTALL_DIR})
+target_link_libraries(DDSTransformStampedTest geometry_msgs fastrtps fastcdr fastdds::optionparser tf2)
+install(TARGETS DDSTransformStampedTest
+    RUNTIME DESTINATION examples/cpp/dds/TransformStampedTest/${BIN_INSTALL_DIR})

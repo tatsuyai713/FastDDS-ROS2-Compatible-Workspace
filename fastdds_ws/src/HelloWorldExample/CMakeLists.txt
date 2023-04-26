@@ -14,7 +14,7 @@
 
 cmake_minimum_required(VERSION 3.16.3)
 
-project(DDSPointCloudTest VERSION 1 LANGUAGES CXX)
+project(DDSHelloWorldExample VERSION 1 LANGUAGES CXX)
 
 # Find requirements
 if(NOT fastcdr_FOUND)
@@ -27,19 +27,7 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
 
-# Set C++11
-# include(CheckCXXCompilerFlag)
-# if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
-#         CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-#     check_cxx_compiler_flag(-std=c++11 SUPPORTS_CXX11)
-#     if(SUPPORTS_CXX11)
-#         add_compile_options(-std=c++11)
-#     else()
-#         message(FATAL_ERROR "Compiler doesn't support C++11")
-#     endif()
-# endif()
-
-# #Check C++11
+#Check C++11
 # include(CheckCXXCompilerFlag)
 # if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 #     check_cxx_compiler_flag(-std=c++11 SUPPORTS_CXX11)
@@ -48,15 +36,15 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
 #     endif()
 # endif()
 
-message(STATUS "Configuring PointCloud example...")
-file(GLOB DDS_HELLOWORLD_TEST_SOURCES_CXX "*.cxx")
-file(GLOB DDS_HELLOWORLD_TEST_SOURCES_CPP "*.cpp")
+message(STATUS "Configuring HelloWorld example...")
+file(GLOB DDS_HELLOWORLD_EXAMPLE_SOURCES_CXX "*.cxx")
+file(GLOB DDS_HELLOWORLD_EXAMPLE_SOURCES_CPP "*.cpp")
 
-add_executable(DDSPointCloudTest ${DDS_HELLOWORLD_TEST_SOURCES_CXX} ${DDS_HELLOWORLD_TEST_SOURCES_CPP})
-target_compile_definitions(DDSPointCloudTest PRIVATE
+add_executable(DDSHelloWorldExample ${DDS_HELLOWORLD_EXAMPLE_SOURCES_CXX} ${DDS_HELLOWORLD_EXAMPLE_SOURCES_CPP})
+target_compile_definitions(DDSHelloWorldExample PRIVATE
     $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>
     $<$<BOOL:${INTERNAL_DEBUG}>:__INTERNALDEBUG> # Internal debug activated.
 )
-target_link_libraries(DDSPointCloudTest std_msgs sensor_msgs fastrtps fastcdr fastdds::optionparser)
-install(TARGETS DDSPointCloudTest
-    RUNTIME DESTINATION examples/cpp/dds/PointCloudTest/${BIN_INSTALL_DIR})
+target_link_libraries(DDSHelloWorldExample fastrtps fastcdr fastdds::optionparser)
+install(TARGETS DDSHelloWorldExample
+    RUNTIME DESTINATION examples/cpp/dds/HelloWorldExample/${BIN_INSTALL_DIR})

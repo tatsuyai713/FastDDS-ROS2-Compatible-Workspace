@@ -25,18 +25,31 @@ if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
 endif()
 
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
 
 # For OpenCV
 find_package(OpenCV REQUIRED)
 
-#Check C++11
-include(CheckCXXCompilerFlag)
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    check_cxx_compiler_flag(-std=c++11 SUPPORTS_CXX11)
-    if(NOT SUPPORTS_CXX11)
-        message(FATAL_ERROR "Compiler doesn't support C++11")
-    endif()
-endif()
+# Set C++11
+# include(CheckCXXCompilerFlag)
+# if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
+#         CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+#     check_cxx_compiler_flag(-std=c++11 SUPPORTS_CXX11)
+#     if(SUPPORTS_CXX11)
+#         add_compile_options(-std=c++11)
+#     else()
+#         message(FATAL_ERROR "Compiler doesn't support C++11")
+#     endif()
+# endif()
+
+# #Check C++11
+# include(CheckCXXCompilerFlag)
+# if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+#     check_cxx_compiler_flag(-std=c++11 SUPPORTS_CXX11)
+#     if(NOT SUPPORTS_CXX11)
+#         message(FATAL_ERROR "Compiler doesn't support C++11")
+#     endif()
+# endif()
 
 message(STATUS "Configuring Image example...")
 file(GLOB DDS_HELLOWORLD_TEST_SOURCES_CXX "*.cxx")
@@ -48,6 +61,6 @@ target_compile_definitions(DDSImageTest PRIVATE
     $<$<BOOL:${INTERNAL_DEBUG}>:__INTERNALDEBUG> # Internal debug activated.
 )
 target_include_directories(DDSImageTest PUBLIC ${OpenCV_INCLUDE_DIRS})
-target_link_libraries(DDSImageTest idl_generated_lib fastrtps fastcdr fastdds::optionparser ${OpenCV_LIBS})
+target_link_libraries(DDSImageTest std_msgs sensor_msgs fastrtps fastcdr fastdds::optionparser ${OpenCV_LIBS})
 install(TARGETS DDSImageTest
     RUNTIME DESTINATION examples/cpp/dds/ImageTest/${BIN_INSTALL_DIR})
