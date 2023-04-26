@@ -1,6 +1,3 @@
 [submodule "fastdds_ws/src/thirdparty/ros-data-types-for-fastdds"]
 	path = fastdds_ws/src/thirdparty/ros-data-types-for-fastdds
 	url = https://github.com/tatsuyai713/ros-data-types-for-fastdds.git
-[submodule "docker_devenv/nvidia-egl-vnc-devenv/nvidia-egl-desktop-ros2"]
-	path = docker_devenv/nvidia-egl-vnc-devenv/nvidia-egl-desktop-ros2
-	url = https://github.com/tatsuyai713/nvidia-egl-desktop-ros2.git
