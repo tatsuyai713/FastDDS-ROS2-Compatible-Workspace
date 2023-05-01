@@ -33,28 +33,28 @@ target_include_directories(optionparser INTERFACE
 # Installation
 ###############################################################################
 
-install(TARGETS optionparser
-        EXPORT optionparser-targets
-        COMPONENT libraries 
-        )
+# install(TARGETS optionparser
+#         EXPORT optionparser-targets
+#         COMPONENT libraries 
+#         )
 
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    DESTINATION ${INCLUDE_INSTALL_DIR}/fastdds/thirdparty
-    COMPONENT libraries
-    FILES_MATCHING
-    PATTERN "*.h"
-    PATTERN "*.hpp"
-    )
+# install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+#     DESTINATION ${INCLUDE_INSTALL_DIR}/fastdds/thirdparty
+#     COMPONENT libraries
+#     FILES_MATCHING
+#     PATTERN "*.h"
+#     PATTERN "*.hpp"
+#     )
 
-if(INSTALLER_PLATFORM)
-    set(INSTALL_DESTINATION_PATH ${DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}-${INSTALLER_PLATFORM}/cmake)
-else()
-    set(INSTALL_DESTINATION_PATH ${DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}/cmake)
-endif()
+# if(INSTALLER_PLATFORM)
+#     set(INSTALL_DESTINATION_PATH ${DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}-${INSTALLER_PLATFORM}/cmake)
+# else()
+#     set(INSTALL_DESTINATION_PATH ${DATA_INSTALL_DIR}/${CMAKE_PROJECT_NAME}/cmake)
+# endif()
 
-# export library
-install(EXPORT optionparser-targets
-        DESTINATION ${INSTALL_DESTINATION_PATH}
-        NAMESPACE fastdds::
-        COMPONENT libraries
-        )
+# # export library
+# install(EXPORT optionparser-targets
+#         DESTINATION ${INSTALL_DESTINATION_PATH}
+#         NAMESPACE fastdds::
+#         COMPONENT libraries
+#         )
