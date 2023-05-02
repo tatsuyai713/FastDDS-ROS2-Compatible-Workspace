@@ -10,7 +10,7 @@ if [ ! $# -ne 1 ]; then
 fi
 
 CURRENT=`pwd`
-
+mkdir build
 cd build
 
 cmake .. -DCMAKE_INSTALL_PREFIX=${CURRENT}/install -DYAML_BUILD_SHARED_LIBS=ON
