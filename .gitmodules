@@ -1,3 +1,6 @@
 [submodule "fastdds_ws/src/thirdparty/ros-data-types-for-fastdds"]
 	path = fastdds_ws/src/thirdparty/ros-data-types-for-fastdds
 	url = https://github.com/tatsuyai713/ros-data-types-for-fastdds.git
+[submodule "fastdds_ws/src/thirdparty/yaml-cpp"]
+	path = fastdds_ws/src/thirdparty/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git
