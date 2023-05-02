@@ -13,7 +13,7 @@ CURRENT=`pwd`
 
 cd build
 
-cmake .. -DCMAKE_INSTALL_PREFIX=${CURRENT}/install
+cmake .. -DCMAKE_INSTALL_PREFIX=${CURRENT}/install -DYAML_BUILD_SHARED_LIBS=ON
 make -j4
 
 
