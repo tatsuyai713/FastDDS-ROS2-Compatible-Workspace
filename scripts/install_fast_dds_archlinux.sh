@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo pacman -Sy
-sudo pacman -S unzip git vim openssl gcc make cmake curl tar jre11-openjdk jdk11-openjdk
+sudo pacman -S unzip git vim openssl gcc make cmake curl tar jre11-openjdk jdk11-openjdk wget
 sudo pacman -S community/opensc community/libp11
 sudo archlinux-java set java-11-openjdk
 
