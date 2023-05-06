@@ -17,7 +17,7 @@ cd build
 sudo mkdir -p /opt/fast-dds-libs
 sudo chmod 777 /opt/fast-dds-libs
 
-cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfastrtps_DIR=/usr/local/share/fastrtps/cmake/ -DCMAKE_SYSTEM_PREFIX_PATH=/usr/local/ -DCMAKE_PREFIX_PATH=/usr/local/ -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs -DYAML_BUILD_SHARED_LIBS=ON
+cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfastrtps_DIR=/usr/local/share/fastrtps/cmake/ -DCMAKE_SYSTEM_PREFIX_PATH=/usr/local/ -DCMAKE_PREFIX_PATH=/usr/local/ -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 make -j4
 
 if [ ! $# -ne 1 ]; then

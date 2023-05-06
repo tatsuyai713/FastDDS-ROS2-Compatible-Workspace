@@ -17,7 +17,7 @@ cd build
 
 mkdir -p ${CURRENT}/install
 
-cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfastrtps_DIR=/usr/local/share/fastrtps/cmake/ -DCMAKE_SYSTEM_PREFIX_PATH=/opt/fast-dds-libs/ -DCMAKE_PREFIX_PATH=/opt/fast-dds-libs/ -DCMAKE_INSTALL_PREFIX=${CURRENT}/install -DYAML_BUILD_SHARED_LIBS=ON
+cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfastrtps_DIR=/usr/local/share/fastrtps/cmake/ -DCMAKE_SYSTEM_PREFIX_PATH=/opt/fast-dds-libs/ -DCMAKE_PREFIX_PATH=/opt/fast-dds-libs/ -DCMAKE_INSTALL_PREFIX=${CURRENT}/install -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 make -j4
 
 

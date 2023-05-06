@@ -8,6 +8,14 @@ cd opencv_build
 CURRENT=`pwd`
 
 
+cd $CURRENT
+wget https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -O yaml-cpp-0.7.0.tar.gz
+tar xvf yaml-cpp-0.7.0.tar.gz
+mkdir yaml-cpp-0.7.0/build
+cd yaml-cpp-0.7.0/build
+sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
+sudo cmake --build . --target install
+
 # Install OpenCV
 cd $CURRENT
 OPENCV_VERSION=4.3.0

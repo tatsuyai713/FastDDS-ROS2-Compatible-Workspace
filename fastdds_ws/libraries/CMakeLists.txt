@@ -22,4 +22,3 @@ endif()
 
 add_subdirectory(ros-data-types-for-fastdds)
 add_subdirectory(tf2)
-add_subdirectory(yaml-cpp)
