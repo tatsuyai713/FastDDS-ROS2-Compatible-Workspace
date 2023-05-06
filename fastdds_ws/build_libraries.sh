@@ -22,7 +22,7 @@ make -j4
 
 if [ ! $# -ne 1 ]; then
 	if [ "install" = $1 ]; then
-                make install
+                sudo make install
                 grep "export LD_LIBRARY_PATH=/opt/fast-dds-libs:$LD_LIBRARY_PATH" ~/.bashrc
                 if [ $? = 0 ]; then
                         echo "LD_LIBRARY_PATH libs are already added"

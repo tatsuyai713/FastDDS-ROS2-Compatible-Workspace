@@ -54,6 +54,6 @@ git clone --depth 1 -b ${OPENCV_VERSION} https://github.com/opencv/opencv.git op
              -DINSTALL_TESTS=OFF \
              -DVIBRANTE=TRUE \
              VERBOSE=1 ../ \
-    && make -j"$(grep ^processor /proc/cpuinfo | wc -l)" install 
+    && sudo make -j"$(grep ^processor /proc/cpuinfo | wc -l)" install 
 
 
