@@ -3,8 +3,10 @@
 export codename=`lsb_release --codename --short`
 
 sudo pacman -Sy
-sudo pacman -S unzip git vim openssl gcc make cmake curl tar jdk-openjdk
+sudo pacman -S unzip git vim openssl gcc make cmake curl tar jre8-openjdk jdk8-openjdk
 sudo pacman -S community/opensc community/libp11
+sudo archlinux-java set java-8-openjdk
+
 p11-kit list-modules
 
 openssl engine pkcs11 -t
@@ -85,15 +87,18 @@ cd Fast-DDS-2.8.2/build
 sudo cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfoonathan_memory_DIR=/usr/local/lib/foonathan_memory/cmake/ -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
 
+sudo rm -rf /opt/gradle/
 sudo mkdir /opt/gradle
 cd /opt/gradle
 sudo wget https://services.gradle.org/distributions/gradle-7.5.1-bin.zip
-sudo rm -rf /opt/gradle/gradle-7.5.1
-sudo unzip -d /opt/gradle gradle-7.5.1-bin.zip
+sudo unzip gradle-7.5.1-bin.zip
 sudo rm -f gradle-7.5.1-bin.zip
 
 sed -i -e '/export PATH=$PATH:\/opt\/gradle\/gradle-7.5.1\/bin/d' ~/.bashrc
 echo 'export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin' >> ~/.bashrc
+
+sed -i -e '/export JAVA_HOME=\/usr\/lib\/jvm\/default/d' ~/.bashrc
+echo 'export JAVA_HOME=/usr/lib/jvm/default' >> ~/.bashrc
 
 source ~/.bashrc
 

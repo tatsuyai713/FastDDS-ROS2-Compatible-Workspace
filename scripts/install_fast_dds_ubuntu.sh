@@ -53,11 +53,11 @@ cd Fast-DDS-2.8.2/build
 sudo cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfoonathan_memory_DIR=/usr/local/lib/foonathan_memory/cmake/ -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
 
+sudo rm -rf /opt/gradle/
 sudo mkdir /opt/gradle
 cd /opt/gradle
 sudo wget https://services.gradle.org/distributions/gradle-7.5.1-bin.zip
-sudo rm -rf /opt/gradle/gradle-7.5.1
-sudo unzip -d /opt/gradle gradle-7.5.1-bin.zip
+sudo unzip gradle-7.5.1-bin.zip
 sudo rm -f gradle-7.5.1-bin.zip
 
 sed -i -e '/export PATH=$PATH:\/opt\/gradle\/gradle-7.5.1\/bin/d' ~/.bashrc
