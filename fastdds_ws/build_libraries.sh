@@ -23,11 +23,11 @@ make -j4
 if [ ! $# -ne 1 ]; then
 	if [ "install" = $1 ]; then
                 sudo make install
-                grep 'export LD_LIBRARY_PATH=/opt/fast-dds-libs:$LD_LIBRARY_PATH' ~/.bashrc
+                grep 'export LD_LIBRARY_PATH=/opt/fast-dds-libs/lib:$LD_LIBRARY_PATH' ~/.bashrc
                 if [ $? = 0 ]; then
                         echo "LD_LIBRARY_PATH libs are already added"
                 else
-                        echo 'export LD_LIBRARY_PATH=/opt/fast-dds-libs:$LD_LIBRARY_PATH' >> ~/.bashrc
+                        echo 'export LD_LIBRARY_PATH=/opt/fast-dds-libs/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
                         source ~/.bashrc
                 fi
                 sudo ldconfig
