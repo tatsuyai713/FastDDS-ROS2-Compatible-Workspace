@@ -29,9 +29,9 @@ if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
 endif()
 
-if(NOT geometry_msgs_FOUND)
-    find_package(geometry_msgs REQUIRED)
-endif()
+# if(NOT geometry_msgs_FOUND)
+#     find_package(geometry_msgs REQUIRED)
+# endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
 set(ROS_DATA_TYPES_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/ros-data-types-for-fastdds/src)

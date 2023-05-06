@@ -30,7 +30,7 @@ target_include_directories(tf2 PUBLIC
 )
 target_link_libraries(tf2 
   geometry_msgs
-  fastrtps fastcdr fastdds::optionparser)
+  fastrtps fastcdr)
 
 # Causes the visibility macros to use dllexport rather than dllimport,
 # which is appropriate when building the dll but not consuming it.
@@ -38,7 +38,7 @@ target_compile_definitions(tf2 PRIVATE "TF2_BUILDING_DLL")
 
 
 # Tests
-if(BUILD_TESTING)
+# if(BUILD_TESTING)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -60,7 +60,7 @@ target_link_libraries(test_static_cache_unittest tf2 gtest gtest_main)
 # add_dependencies(test_static_cache_unittest ${catkin_EXPORTED_TARGETS})
 
 add_executable(test_simple test/simple_tf2_core.cpp)
-target_link_libraries(test_simple geometry_msgs fastrtps fastcdr fastdds::optionparser tf2 gtest gtest_main)
+target_link_libraries(test_simple geometry_msgs fastrtps fastcdr tf2 gtest gtest_main)
 # add_dependencies(test_simple ${catkin_EXPORTED_TARGETS})
 
 add_executable(test_time test/test_time.cpp)
@@ -68,7 +68,7 @@ target_link_libraries(test_time tf2 gtest gtest_main)
 # add_dependencies(test_transform_datatypes ${catkin_EXPORTED_TARGETS})
 enable_testing()
 
-endif()
+# endif()
 
 
 install(TARGETS tf2 EXPORT export_tf2
