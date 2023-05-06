@@ -21,21 +21,6 @@ sed -i -e '/export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:\/usr\/local\/lib/d' ~/.bash
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib' >> ~/.bashrc
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
-# Build boost
-cd $CURRENT
-if ! [ -f "boost_1_72_0.tar.bz2" ]; then
-  curl -L --max-time 1000 --retry 100 --retry-delay 1 https://boostorg.jfrog.io/artifactory/main/release/1.72.0/source/boost_1_72_0.tar.bz2 -C - -o "boost_1_72_0.tar.bz2"
-fi
-if [ $? -eq 0 ]; then
-  rm -rf boost_1_72_0 && \
-  tar -xf boost_1_72_0.tar.bz2  && \
-    cd boost_1_72_0/tools/build && ./bootstrap.sh && \
-    mkdir build && \
-    ./b2 --prefix=./build install && \
-    cd ../../ && \
-    ./tools/build/build/bin/b2 cxxstd=17 cxxstd-dialect=gnu abi=aapcs address-model=64 architecture=arm optimization=speed warnings=off threading=multi --without-python --prefix=/usr/local --libdir=/usr/local/lib --includedir=/usr/local/include install
-fi
-
 cd $CURRENT
 wget https://github.com/foonathan/memory/archive/refs/tags/v0.7-2.tar.gz -O memory-0.7-2.tar.gz
 tar xvf memory-0.7-2.tar.gz
@@ -43,7 +28,6 @@ mkdir memory-0.7-2/build
 cd memory-0.7-2/build
 sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
-
 
 cd $CURRENT
 wget https://github.com/eProsima/foonathan_memory_vendor/archive/refs/tags/v1.2.1.tar.gz -O foonathan_memory_vendor-1.2.1.tar.gz
