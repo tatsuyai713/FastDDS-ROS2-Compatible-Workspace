@@ -4,6 +4,7 @@ export codename=`lsb_release --codename --short`
 
 sudo pacman -Sy
 sudo pacman -S unzip git vim openssl gcc make cmake curl tar jdk-openjdk
+sudo pacman -S community/opensc community/libp11
 p11-kit list-modules
 
 openssl engine pkcs11 -t
