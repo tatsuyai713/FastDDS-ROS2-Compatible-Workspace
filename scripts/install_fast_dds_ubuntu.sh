@@ -72,6 +72,7 @@ git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git -b v2.4.0
 cd Fast-DDS-Gen
 gradle assemble
 cd ..
+sudo rm -rf /opt/fast-dds-gen
 sudo mv ./Fast-DDS-Gen /opt/fast-dds-gen 
 
 sed -i -e '/export PATH=$PATH:\/opt\/fast-dds-gen\/scripts/d' ~/.bashrc
