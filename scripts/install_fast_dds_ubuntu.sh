@@ -17,9 +17,9 @@ mkdir ~/Fast-DDS
 cd ~/Fast-DDS
 CURRENT=`pwd`
 
-sed -i -e '/export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:\/usr\/local\/lib/d' ~/.bashrc
-echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib' >> ~/.bashrc
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+sed -i -e '/export LD_LIBRARY_PATH=\/usr\/local\/lib:$LD_LIBRARY_PATH/d' ~/.bashrc
+echo 'export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
 cd $CURRENT
 wget https://github.com/foonathan/memory/archive/refs/tags/v0.7-2.tar.gz -O memory-0.7-2.tar.gz
