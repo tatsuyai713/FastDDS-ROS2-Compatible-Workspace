@@ -3,7 +3,7 @@
 export codename=`lsb_release --codename --short`
 
 sudo apt update
-sudo apt install -y libasio-dev libtinyxml2-dev libssl-dev libp11-dev libengine-pkcs11-openssl softhsm2 libengine-pkcs11-openssl swig libpython3-dev g++ python3-pip wget git openjdk-8-jdk 
+sudo apt install -y libasio-dev libtinyxml2-dev libssl-dev libp11-dev libengine-pkcs11-openssl softhsm2 libengine-pkcs11-openssl swig libpython3-dev g++ python3-pip wget git openjdk-11-jdk 
 p11-kit list-modules
 
 openssl engine pkcs11 -t
