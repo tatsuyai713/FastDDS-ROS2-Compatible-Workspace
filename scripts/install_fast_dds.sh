@@ -1,7 +1,5 @@
 #!/bin/bash
 
-CURRENT=`pwd`
-
 export codename=`lsb_release --codename --short`
 
 sudo apt update
@@ -16,12 +14,29 @@ sudo rm -rf ~/Fast-DDS-Gen
 sudo mv /opt/ros/ /opt/ros_tmp/
 
 mkdir ~/Fast-DDS
+cd ~/Fast-DDS
+CURRENT=`pwd`
 
 sed -i -e '/export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:\/usr\/local\/lib/d' ~/.bashrc
 echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib' >> ~/.bashrc
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
-cd ~/Fast-DDS
+# Build boost
+cd $CURRENT
+if ! [ -f "boost_1_72_0.tar.bz2" ]; then
+  curl -L --max-time 1000 --retry 100 --retry-delay 1 https://boostorg.jfrog.io/artifactory/main/release/1.72.0/source/boost_1_72_0.tar.bz2 -C - -o "boost_1_72_0.tar.bz2"
+fi
+if [ $? -eq 0 ]; then
+  rm -rf boost_1_72_0 && \
+  tar -xf boost_1_72_0.tar.bz2  && \
+    cd boost_1_72_0/tools/build && ./bootstrap.sh && \
+    mkdir build && \
+    ./b2 --prefix=./build install && \
+    cd ../../ && \
+    ./tools/build/build/bin/b2 cxxstd=17 cxxstd-dialect=gnu abi=aapcs address-model=64 architecture=arm optimization=speed warnings=off threading=multi --without-python --prefix=/usr/local --libdir=/usr/local/lib --includedir=/usr/local/include install
+fi
+
+cd $CURRENT
 wget https://github.com/foonathan/memory/archive/refs/tags/v0.7-2.tar.gz -O memory-0.7-2.tar.gz
 tar xvf memory-0.7-2.tar.gz
 mkdir memory-0.7-2/build
@@ -30,7 +45,7 @@ sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_
 sudo cmake --build . --target install
 
 
-cd ~/Fast-DDS
+cd $CURRENT
 wget https://github.com/eProsima/foonathan_memory_vendor/archive/refs/tags/v1.2.1.tar.gz -O foonathan_memory_vendor-1.2.1.tar.gz
 tar xvf foonathan_memory_vendor-1.2.1.tar.gz
 mkdir foonathan_memory_vendor-1.2.1/build
@@ -38,7 +53,7 @@ cd foonathan_memory_vendor-1.2.1/build
 sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
 
-cd ~/Fast-DDS
+cd $CURRENT
 wget https://github.com/eProsima/Fast-CDR/archive/refs/tags/v1.0.25.tar.gz -O Fast-CDR-1.0.25.tar.gz
 tar xvf Fast-CDR-1.0.25.tar.gz
 mkdir Fast-CDR-1.0.25/build
@@ -46,7 +61,7 @@ cd Fast-CDR-1.0.25/build
 sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
 
-cd ~/Fast-DDS
+cd $CURRENT
 wget https://github.com/eProsima/Fast-DDS/archive/refs/tags/v2.8.2.tar.gz -O Fast-DDS-2.8.2.tar.gz
 tar xvf Fast-DDS-2.8.2.tar.gz
 mkdir Fast-DDS-2.8.2/build
