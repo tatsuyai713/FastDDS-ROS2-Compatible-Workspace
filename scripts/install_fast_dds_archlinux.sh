@@ -1,7 +1,5 @@
 #!/bin/bash
 
-export codename=`lsb_release --codename --short`
-
 sudo pacman -Sy
 sudo pacman -S unzip git vim openssl gcc make cmake curl tar jre11-openjdk jdk11-openjdk
 sudo pacman -S community/opensc community/libp11
