@@ -69,7 +69,7 @@ mkdir fastdds_recorder
 cd fastdds_recorder
 wget https://github.com/eProsima/DDS-Recorder/archive/refs/tags/v0.1.0.tar.gz
 tar xvf v0.1.0.tar.gz
-cd DDS-Recorder-0.1.0
+cd DDS-Record-Replay-0.1.0
 
 cd ddsrecorder_participants
 mkdir build
