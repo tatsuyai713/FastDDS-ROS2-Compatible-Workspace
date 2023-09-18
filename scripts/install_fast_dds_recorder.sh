@@ -12,9 +12,9 @@ rm -rf ./fastdds_recorder
 
 mkdir fastdds_dev_utils
 cd fastdds_dev_utils
-wget https://github.com/eProsima/dev-utils/archive/refs/tags/v0.3.0.tar.gz
-tar xvf v0.3.0.tar.gz
-cd dev-utils-0.3.0
+wget https://github.com/eProsima/dev-utils/archive/refs/tags/v0.4.0.tar.gz
+tar xvf v0.4.0.tar.gz
+cd dev-utils-0.4.0
 cd cmake_utils
 mkdir build
 cd build
@@ -34,11 +34,11 @@ cd $CURRENT
 
 mkdir fastdds_pipe
 cd fastdds_pipe
-wget https://github.com/eProsima/DDS-Pipe/archive/refs/tags/v0.1.0.tar.gz
+wget https://github.com/eProsima/DDS-Pipe/archive/refs/tags/v0.2.0.tar.gz
 
-tar xvf v0.1.0.tar.gz
+tar xvf v0.2.0.tar.gz
 
-cd DDS-Pipe-0.1.0
+cd DDS-Pipe-0.2.0
 
 cd ddspipe_core
 mkdir build
@@ -67,9 +67,9 @@ cd $CURRENT
 
 mkdir fastdds_recorder
 cd fastdds_recorder
-wget https://github.com/eProsima/DDS-Recorder/archive/refs/tags/v0.1.0.tar.gz
-tar xvf v0.1.0.tar.gz
-cd DDS-Record-Replay-0.1.0
+wget https://github.com/eProsima/DDS-Record-Replay/archive/refs/tags/v0.2.0.tar.gz
+tar xvf v0.2.0.tar.gz
+cd DDS-Record-Replay-0.2.0
 
 cd ddsrecorder_participants
 mkdir build

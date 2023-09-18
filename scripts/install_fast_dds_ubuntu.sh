@@ -22,34 +22,34 @@ echo 'export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 
 cd $CURRENT
-wget https://github.com/foonathan/memory/archive/refs/tags/v0.7-2.tar.gz -O memory-0.7-2.tar.gz
-tar xvf memory-0.7-2.tar.gz
-mkdir memory-0.7-2/build
-cd memory-0.7-2/build
+wget https://github.com/foonathan/memory/archive/refs/tags/v0.7-3.tar.gz -O memory-0.7-3.tar.gz
+tar xvf memory-0.7-3.tar.gz
+mkdir memory-0.7-3/build
+cd memory-0.7-3/build
 sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
 
 cd $CURRENT
-wget https://github.com/eProsima/foonathan_memory_vendor/archive/refs/tags/v1.2.1.tar.gz -O foonathan_memory_vendor-1.2.1.tar.gz
-tar xvf foonathan_memory_vendor-1.2.1.tar.gz
-mkdir foonathan_memory_vendor-1.2.1/build
-cd foonathan_memory_vendor-1.2.1/build
+wget https://github.com/eProsima/foonathan_memory_vendor/archive/refs/tags/v1.3.1.tar.gz -O foonathan_memory_vendor-1.3.1.tar.gz
+tar xvf foonathan_memory_vendor-1.3.1.tar.gz
+mkdir foonathan_memory_vendor-1.3.1/build
+cd foonathan_memory_vendor-1.3.1/build
 sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
 
 cd $CURRENT
-wget https://github.com/eProsima/Fast-CDR/archive/refs/tags/v1.0.25.tar.gz -O Fast-CDR-1.0.25.tar.gz
-tar xvf Fast-CDR-1.0.25.tar.gz
-mkdir Fast-CDR-1.0.25/build
-cd Fast-CDR-1.0.25/build
+wget https://github.com/eProsima/Fast-CDR/archive/refs/tags/v1.1.1.tar.gz -O Fast-CDR-1.1.1.tar.gz
+tar xvf Fast-CDR-1.1.1.tar.gz
+mkdir Fast-CDR-1.1.1/build
+cd Fast-CDR-1.1.1/build
 sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
 
 cd $CURRENT
-wget https://github.com/eProsima/Fast-DDS/archive/refs/tags/v2.8.2.tar.gz -O Fast-DDS-2.8.2.tar.gz
-tar xvf Fast-DDS-2.8.2.tar.gz
-mkdir Fast-DDS-2.8.2/build
-cd Fast-DDS-2.8.2/build
+wget https://github.com/eProsima/Fast-DDS/archive/refs/tags/v2.11.2.tar.gz -O Fast-DDS-2.11.2.tar.gz
+tar xvf Fast-DDS-2.11.2.tar.gz
+mkdir Fast-DDS-2.11.2/build
+cd Fast-DDS-2.11.2/build
 sudo cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfoonathan_memory_DIR=/usr/local/lib/foonathan_memory/cmake/ -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
 
@@ -68,7 +68,7 @@ source ~/.bashrc
 export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin
 
 cd ~
-git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git -b v2.4.0
+git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git -b v3.0.0
 cd Fast-DDS-Gen
 gradle assemble
 cd ..

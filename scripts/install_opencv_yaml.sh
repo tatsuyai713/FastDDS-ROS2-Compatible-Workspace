@@ -9,16 +9,16 @@ CURRENT=`pwd`
 
 
 cd $CURRENT
-wget https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.tar.gz -O yaml-cpp-0.7.0.tar.gz
-tar xvf yaml-cpp-0.7.0.tar.gz
-mkdir yaml-cpp-yaml-cpp-0.7.0/build
-cd yaml-cpp-yaml-cpp-0.7.0/build
+wget https://github.com/jbeder/yaml-cpp/archive/refs/tags/0.8.0.tar.gz -O yaml-cpp-0.8.0.tar.gz
+tar xvf yaml-cpp-0.8.0.tar.gz
+mkdir yaml-cpp-0.8.0/build
+cd yaml-cpp-0.8.0/build
 sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 sudo cmake --build . --target install
 
 # Install OpenCV
 cd $CURRENT
-OPENCV_VERSION=4.3.0
+OPENCV_VERSION=4.5.4 # Same as Ubuntu 22.04 default
 git clone --depth 1 -b ${OPENCV_VERSION} https://github.com/opencv/opencv.git opencv-${OPENCV_VERSION} \
     && cd opencv-${OPENCV_VERSION} && \
     mkdir build && cd build \
@@ -65,3 +65,6 @@ git clone --depth 1 -b ${OPENCV_VERSION} https://github.com/opencv/opencv.git op
     && sudo make -j"$(grep ^processor /proc/cpuinfo | wc -l)" install 
 
 
+cd $CURRENT
+cd ..
+sudo rm ./opencv_build -rf
