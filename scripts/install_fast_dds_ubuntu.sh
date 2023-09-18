@@ -68,7 +68,7 @@ source ~/.bashrc
 export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin
 
 cd ~
-git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git -b v3.0.0
+git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git -b v2.5.1
 cd Fast-DDS-Gen
 gradle assemble
 cd ..
