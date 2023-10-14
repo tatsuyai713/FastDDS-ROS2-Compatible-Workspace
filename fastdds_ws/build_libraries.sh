@@ -20,8 +20,18 @@ sudo chmod 777 /opt/fast-dds-libs
 cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfastrtps_DIR=/usr/local/share/fastrtps/cmake/ -DCMAKE_SYSTEM_PREFIX_PATH=/usr/local/ -DCMAKE_PREFIX_PATH=/usr/local/ -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
 make -j4
 
+cd ../yaml-cpp
+mkdir build
+cd build
+cmake .. -DCMAKE_SYSTEM_PREFIX_PATH=/usr/local/ -DCMAKE_PREFIX_PATH=/usr/local/ -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
+make -j4
+
+cd $CURRENT/build
+
 if [ ! $# -ne 1 ]; then
 	if [ "install" = $1 ]; then
+                sudo make install
+                cd ../yaml-cpp/build
                 sudo make install
                 grep 'export LD_LIBRARY_PATH=/opt/fast-dds-libs/lib:$LD_LIBRARY_PATH' ~/.bashrc
                 if [ $? = 0 ]; then
