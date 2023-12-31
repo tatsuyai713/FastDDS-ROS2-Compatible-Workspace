@@ -15,7 +15,6 @@ sudo archlinux-java set java-11-openjdk
 p11-kit list-modules
 
 openssl engine pkcs11 -t
-sudo pacman -S dos2unix
 
 sudo rm -rf ${FAST_DDS_WORK_DIR}
 
@@ -111,7 +110,7 @@ sudo mkdir -p /opt/fast-dds-gen
 git clone --recursive -b v$fast_dds_gen_version https://github.com/eProsima/Fast-DDS-Gen.git fast-dds-gen \
     && cd fast-dds-gen \
     && gradle assemble \
-    && sudo gradle install --install_path=/opt/fast-dds-gen
+    && sudo -E gradle install --install_path=/opt/fast-dds-gen
 
 sed -i -e '/export PATH=$PATH:\/opt\/fast-dds-gen\/scripts/d' ~/.bashrc
 echo 'export PATH=$PATH:/opt/fast-dds-gen/scripts' >> ~/.bashrc
