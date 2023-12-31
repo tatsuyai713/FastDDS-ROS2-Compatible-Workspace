@@ -22,6 +22,7 @@ cmake ..  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_PREFIX_PATH=$INSTALL_PATH \
   -Dfastcdr_DIR=$INSTALL_PATH/lib/cmake/fastcdr/ \
   -Dfastrtps_DIR=$INSTALL_PATH/share/fastrtps/cmake/ \
+  -Dfoonathan_memory_DIR=$INSTALL_PATH/lib/foonathan_memory/cmake/ \
   -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs
 make -j4
 
@@ -31,9 +32,6 @@ cd build
 cmake ..  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
   -DCMAKE_PREFIX_PATH=$INSTALL_PATH \
-  -Dfastcdr_DIR=$INSTALL_PATH/lib/cmake/fastcdr/ \
-  -Dfastrtps_DIR=$INSTALL_PATH/share/fastrtps/cmake/ \
-  -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs \
   -DYAML_BUILD_SHARED_LIBS=ON
 make -j4
 
