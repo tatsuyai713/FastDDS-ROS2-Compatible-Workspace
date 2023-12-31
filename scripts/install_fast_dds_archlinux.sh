@@ -51,8 +51,6 @@ cd asio-1.28.0
 make
 sudo make install
 
-https://yer.dl.sourceforge.net/project/asio/asio/1.28.0%20%28Stable%29/asio-1.28.0.tar.gz
-
 cd $CURRENT
 wget https://github.com/foonathan/memory/archive/refs/tags/v0.7-2.tar.gz -O memory-0.7-2.tar.gz
 tar xvf memory-0.7-2.tar.gz
