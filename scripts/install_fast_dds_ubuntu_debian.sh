@@ -94,8 +94,8 @@ sudo rm -f gradle-7.5.1-bin.zip
 sed -i -e '/export PATH=$PATH:\/opt\/gradle\/gradle-7.5.1\/bin/d' ~/.bashrc
 echo 'export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin' >> ~/.bashrc
 
-sed -i -e '/export JAVA_HOME=\/usr\/lib\/jvm\/default/d' ~/.bashrc
-echo 'export JAVA_HOME=/usr/lib/jvm/default' >> ~/.bashrc
+sed -i -e '/export JAVA_HOME=\/usr\/lib\/jvm\/default-java/d' ~/.bashrc
+echo 'export JAVA_HOME=/usr/lib/jvm/default-java' >> ~/.bashrc
 
 source ~/.bashrc
 
