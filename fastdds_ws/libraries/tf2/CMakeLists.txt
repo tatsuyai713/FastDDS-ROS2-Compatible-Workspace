@@ -29,8 +29,9 @@ target_include_directories(tf2 PUBLIC
   "$<TARGET_PROPERTY:std_msgs,INTERFACE_INCLUDE_DIRECTORIES>"
 )
 target_link_libraries(tf2 
+  std_msgs
   geometry_msgs
-  fastrtps fastcdr)
+  fastrtps fastcdr fastdds::optionparser)
 
 # Causes the visibility macros to use dllexport rather than dllimport,
 # which is appropriate when building the dll but not consuming it.
@@ -77,4 +78,4 @@ install(TARGETS tf2 EXPORT export_tf2
   RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY tf2/ DESTINATION include/${PROJECT_NAME})

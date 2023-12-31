@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-project("fastdds_ws")
+project("libraries")
 
 if( ${CMAKE_SYSTEM_PROCESSOR} STREQUAL "aarch64" )
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -32,5 +32,7 @@ if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
 endif()
 
+add_subdirectory(optionparser)
 add_subdirectory(ros-data-types-for-fastdds)
 add_subdirectory(tf2)
+add_subdirectory(yaml-cpp)

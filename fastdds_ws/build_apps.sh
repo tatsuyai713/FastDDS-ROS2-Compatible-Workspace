@@ -1,11 +1,15 @@
 #!/bin/bash
 
+OPT=$1
+OPT_NUM=$#
+
 cd apps
 
 # clean
-if [ ! $# -ne 1 ]; then
-	if [ "clean" = $1 ]; then
-        rm -r ./build
+if [ ! $OPT_NUM -ne 1 ]; then
+	if [ "clean" = $OPT ]; then
+        rm -rf ./build
+        rm -rf ./install
         mkdir ./build
         exit
 	fi
@@ -28,8 +32,8 @@ cmake ..  -DCMAKE_BUILD_TYPE=Release \
 make -j4
 
 
-if [ ! $# -ne 1 ]; then
-	if [ "install" = $1 ]; then
-    sudo make install
+if [ ! $OPT_NUM -ne 1 ]; then
+	if [ "install" = $OPT ]; then
+                make install
 	fi
 fi
