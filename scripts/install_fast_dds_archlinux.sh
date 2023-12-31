@@ -110,7 +110,7 @@ sudo mkdir -p /opt/fast-dds-gen
 git clone --recursive -b v$fast_dds_gen_version https://github.com/eProsima/Fast-DDS-Gen.git fast-dds-gen \
     && cd fast-dds-gen \
     && gradle assemble \
-    && sudo -E gradle install --install_path=/opt/fast-dds-gen
+    && sudo /opt/gradle/gradle-7.5.1/bin/gradle install --install_path=/opt/fast-dds-gen
 
 sed -i -e '/export PATH=$PATH:\/opt\/fast-dds-gen\/scripts/d' ~/.bashrc
 echo 'export PATH=$PATH:/opt/fast-dds-gen/scripts' >> ~/.bashrc
