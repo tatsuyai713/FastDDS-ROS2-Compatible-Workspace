@@ -29,6 +29,6 @@ make -j4
 
 if [ ! $# -ne 1 ]; then
 	if [ "install" = $1 ]; then
-                sudo make install
+    sudo make install
 	fi
 fi

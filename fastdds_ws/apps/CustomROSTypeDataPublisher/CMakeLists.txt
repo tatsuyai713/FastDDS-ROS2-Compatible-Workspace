@@ -34,6 +34,7 @@ endif()
 # endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
+set(ROS_DATA_TYPES_PATH /opt/fast-dds-libs/include)
 
 file(GLOB_RECURSE Original_IDL_Files
   "${CMAKE_CURRENT_SOURCE_DIR}/*/*.idl"
