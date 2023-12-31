@@ -34,7 +34,6 @@ endif()
 # endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
-set(ROS_DATA_TYPES_PATH /opt/fast-dds-libs/include)
 
 #Check C++11
 # include(CheckCXXCompilerFlag)
