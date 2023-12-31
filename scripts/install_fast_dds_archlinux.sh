@@ -99,8 +99,7 @@ echo 'export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin' >> ~/.bashrc
 sed -i -e '/export JAVA_HOME=\/usr\/lib\/jvm\/default/d' ~/.bashrc
 echo 'export JAVA_HOME=/usr/lib/jvm/default' >> ~/.bashrc
 
-source ~/.bashrc
-
+export JAVA_HOME=/usr/lib/jvm/default
 export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin
 
 # Install Fast-DDS-Gen
