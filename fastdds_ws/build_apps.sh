@@ -23,6 +23,7 @@ cmake ..  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_PREFIX_PATH=$INSTALL_PATH \
   -Dfastcdr_DIR=$INSTALL_PATH/lib/cmake/fastcdr/ \
   -Dfastrtps_DIR=$INSTALL_PATH/share/fastrtps/cmake/ \
+  -Dfoonathan_memory_DIR=$INSTALL_PATH/lib/foonathan_memory/cmake/ \
   -DCMAKE_INSTALL_PREFIX=${CURRENT}/install
 make -j4
 
