@@ -117,3 +117,11 @@ sed -i -e '/export PATH=$PATH:\/opt\/fast-dds-gen\/bin/d' ~/.bashrc
 echo 'export PATH=$PATH:/opt/fast-dds-gen/bin' >> ~/.bashrc
 
 
+grep 'export LD_LIBRARY_PATH=/opt/fast-dds/lib:$LD_LIBRARY_PATH' ~/.bashrc
+if [ $? = 0 ]; then
+  echo "LD_LIBRARY_PATH libs are already added"
+else
+  echo 'export LD_LIBRARY_PATH=/opt/fast-dds/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
+  source ~/.bashrc
+fi
+sudo ldconfig
