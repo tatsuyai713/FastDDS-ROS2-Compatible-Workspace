@@ -1,87 +1,91 @@
 #!/bin/bash
 
+fast_dds_version="2.11.2"
+foonathan_memory_vendor_version="1.3.1"
+googletest_version="1.13.0"
+fast_dds_gen_version="2.4.0"
+
+FAST_DDS_WORK_DIR=./dds_build
+
 sudo pacman -Sy
-sudo pacman -S unzip git vim openssl gcc make cmake curl tar jre11-openjdk jdk11-openjdk wget
+sudo pacman -S gcc make cmake automake autoconf unzip git vim openssl gcc make cmake curl tar jre11-openjdk jdk11-openjdk wget
 sudo pacman -S community/opensc community/libp11
 sudo archlinux-java set java-11-openjdk
 
 p11-kit list-modules
 
 openssl engine pkcs11 -t
+sudo pacman -S dos2unix
 
-sudo rm -rf ~/Fast-DDS
-sudo rm -rf ~/Fast-DDS-Gen
+sudo rm -rf ${FAST_DDS_WORK_DIR}
 
-mkdir ~/Fast-DDS
-cd ~/Fast-DDS
-CURRENT=`pwd`
+mkdir ${FAST_DDS_WORK_DIR}
 
-sed -i -e '/export LD_LIBRARY_PATH=\/usr\/local\/lib:$LD_LIBRARY_PATH/d' ~/.bashrc
-echo 'export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
-export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+cd ${FAST_DDS_WORK_DIR}
+git clone https://github.com/eProsima/Fast-DDS.git -b v$fast_dds_version --depth 1
+cd Fast-DDS
+WORKSPACE=$PWD
+git submodule update --init $PWD/thirdparty/asio $PWD/thirdparty/fastcdr $PWD/thirdparty/tinyxml2
+cd ${WORKSPACE}
+git clone https://github.com/eProsima/foonathan_memory_vendor.git -b v$foonathan_memory_vendor_version
+cd ${WORKSPACE}
+git clone https://github.com/google/googletest.git -b v$googletest_version --depth 1
 
-# Build boost
-cd $CURRENT
-if ! [ -f "boost_1_72_0.tar.bz2" ]; then
-  curl -L --max-time 1000 --retry 100 --retry-delay 1 https://boostorg.jfrog.io/artifactory/main/release/1.72.0/source/boost_1_72_0.tar.bz2 -C - -o "boost_1_72_0.tar.bz2"
-fi
-if [ $? -eq 0 ]; then
-  rm -rf boost_1_72_0 && \
-  tar -xf boost_1_72_0.tar.bz2  && \
-    cd boost_1_72_0/tools/build && ./bootstrap.sh && \
-    mkdir build && \
-    ./b2 --prefix=./build install && \
-    cd ../../ && \
-    ./tools/build/build/bin/b2 cxxstd=17 cxxstd-dialect=gnu abi=aapcs address-model=64 architecture=arm optimization=speed warnings=off threading=multi --without-python --prefix=/usr/local --libdir=/usr/local/lib --includedir=/usr/local/include install
-fi
+INSTALL_PATH=/opt/fast-dds
+sudo rm -rf $INSTALL_PATH
+sudo mkdir $INSTALL_PATH
 
-cd $CURRENT
-wget https://github.com/leethomason/tinyxml2/archive/refs/tags/9.0.0.tar.gz -O tinyxml2-9.0.0.tar.gz
-tar xvf tinyxml2-9.0.0.tar.gz
-mkdir tinyxml2-9.0.0/build
-cd tinyxml2-9.0.0/build
-sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
-sudo cmake --build . --target install
+cd $WORKSPACE
+cd foonathan_memory_vendor && mkdir build && cd build &&\
+CXXFLAGS="-O3" cmake -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH ../ && \
+make -j4 && sudo make install
 
-cd $CURRENT
-wget https://yer.dl.sourceforge.net/project/asio/asio/1.28.0%20%28Stable%29/asio-1.28.0.tar.gz -O asio-1.28.0.tar.gz 
-tar xvf asio-1.28.0.tar.gz 
-cd asio-1.28.0
-./configure --prefix=/usr/local/ 
-make
-sudo make install
+cd $WORKSPACE
+cd googletest && mkdir build && cd build &&\
+CXXFLAGS="-O3" cmake -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH ../ && \
+make -j4 && sudo make install
 
-cd $CURRENT
-wget https://github.com/foonathan/memory/archive/refs/tags/v0.7-2.tar.gz -O memory-0.7-2.tar.gz
-tar xvf memory-0.7-2.tar.gz
-mkdir memory-0.7-2/build
-cd memory-0.7-2/build
-sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
-sudo cmake --build . --target install
+# Build and install Fast-CDR (required for FastDDS)
+cd $WORKSPACE
+cd thirdparty/fastcdr && mkdir build && cd build && \
+CXXFLAGS="-O3" cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH ../ &&
+make -j4 && sudo make install
 
-cd $CURRENT
-wget https://github.com/eProsima/foonathan_memory_vendor/archive/refs/tags/v1.2.1.tar.gz -O foonathan_memory_vendor-1.2.1.tar.gz
-tar xvf foonathan_memory_vendor-1.2.1.tar.gz
-mkdir foonathan_memory_vendor-1.2.1/build
-cd foonathan_memory_vendor-1.2.1/build
-sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
-sudo cmake --build . --target install
 
-cd $CURRENT
-wget https://github.com/eProsima/Fast-CDR/archive/refs/tags/v1.0.25.tar.gz -O Fast-CDR-1.0.25.tar.gz
-tar xvf Fast-CDR-1.0.25.tar.gz
-mkdir Fast-CDR-1.0.25/build
-cd Fast-CDR-1.0.25/build
-sudo cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
-sudo cmake --build . --target install
+# Build and install TinyXML2 (required for FastDDS)
+cd $WORKSPACE
+cd thirdparty/tinyxml2 && mkdir build && cd build && \
+CXXFLAGS="-O3 -fPIC" cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH ../ &&
+make -j4 && sudo make install
 
-cd $CURRENT
-wget https://github.com/eProsima/Fast-DDS/archive/refs/tags/v2.8.2.tar.gz -O Fast-DDS-2.8.2.tar.gz
-tar xvf Fast-DDS-2.8.2.tar.gz
-mkdir Fast-DDS-2.8.2/build
-cd Fast-DDS-2.8.2/build
-sudo cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfoonathan_memory_DIR=/usr/local/lib/foonathan_memory/cmake/ -DCMAKE_INSTALL_PREFIX=/usr/local/ -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
-sudo cmake --build . --target install
+
+# Build and install ASIO (requited for FastDDS)
+cd $WORKSPACE
+cd thirdparty/asio/asio && \
+./autogen.sh && \
+./configure CXXFLAGS="-O3 -g -DASIO_HAS_PTHREADS -D_GLIBCXX_HAS_GTHREADS -std=c++11" --prefix=$INSTALL_PATH  && \
+make -j4 && sudo make install
+
+
+# Build and install Fast-DDS
+cd $WORKSPACE
+rm -rf ./build && mkdir build && cd build && \
+CXXFLAGS="-DASIO_HAS_PTHREADS=1" \
+  cmake -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -Dfastcdr_DIR=$INSTALL_PATH/lib/cmake/fastcdr/ \
+  -Dfoonathan_memory_DIR=$INSTALL_PATH/lib/foonathan_memory/cmake/ \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH \
+  .. && \
+make -j4 && sudo make install
+
+
+cd $WORKSPACE
+# Java packages for FastDDS Generator and other similar tools
+sudo mkdir -p /usr/share/man/man1
 
 sudo rm -rf /opt/gradle/
 sudo mkdir /opt/gradle
@@ -100,19 +104,16 @@ source ~/.bashrc
 
 export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin
 
-cd ~
-git clone --recursive https://github.com/eProsima/Fast-DDS-Gen.git -b v2.4.0
-cd Fast-DDS-Gen
-gradle assemble
-cd ..
+# Install Fast-DDS-Gen
+cd $WORKSPACE
 sudo rm -rf /opt/fast-dds-gen
-sudo mv ./Fast-DDS-Gen /opt/fast-dds-gen 
+sudo mkdir -p /opt/fast-dds-gen
+git clone --recursive -b v$fast_dds_gen_version https://github.com/eProsima/Fast-DDS-Gen.git fast-dds-gen \
+    && cd fast-dds-gen \
+    && gradle assemble \
+    && sudo gradle install --install_path=/opt/fast-dds-gen
 
 sed -i -e '/export PATH=$PATH:\/opt\/fast-dds-gen\/scripts/d' ~/.bashrc
 echo 'export PATH=$PATH:/opt/fast-dds-gen/scripts' >> ~/.bashrc
-
-
-sudo rm -rf ~/Fast-DDS
-sudo rm -rf ~/Fast-DDS-Gen
 
 
