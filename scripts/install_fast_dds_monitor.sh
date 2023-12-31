@@ -3,7 +3,7 @@ sudo apt install -y libqt5charts5-dev qtquickcontrols2-5-dev
 sudo apt install -y qtdeclarative5-dev qml-module-qtcharts qml-module-qt-labs-calendar
 
 CURRENT=`pwd`
-
+INSTALL_PATH=/opt/fast-dds
 sudo mv /opt/ros/ /opt/ros_tmp/
 
 rm -rf fastdds_statistics
@@ -16,7 +16,10 @@ tar xvf v0.11.0.tar.gz
 cd Fast-DDS-statistics-backend-0.11.0
 mkdir build
 cd build
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH
 make
 sudo make install
 
@@ -32,7 +35,14 @@ cd Fast-DDS-monitor-1.5.0
 
 mkdir build
 cd build
-cmake -Dfastrtps_DIR=/usr/local/share/fastrtps/ -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfoonathan_memory_DIR=/usr/local/lib/foonathan_memory/cmake/ ..
+cmake .. \
+  -Dfastrtps_DIR=$INSTALL_PATH/share/fastrtps/ \
+  -Dfastcdr_DIR=$INSTALL_PATH/lib/cmake/fastcdr/ \
+  -Dfoonathan_memory_DIR=$INSTALL_PATH/lib/foonathan_memory/cmake/ \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH
 make
 sudo make install
 
