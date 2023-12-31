@@ -11,19 +11,30 @@ if [ ! $# -ne 1 ]; then
 fi
 
 CURRENT=`pwd`
+INSTALL_PATH=/opt/fast-dds
 mkdir build
 cd build
 
-sudo mkdir -p /opt/fast-dds-libs
 sudo chmod 777 /opt/fast-dds-libs
 
-cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfastrtps_DIR=/usr/local/share/fastrtps/cmake/ -DCMAKE_SYSTEM_PREFIX_PATH=/usr/local/ -DCMAKE_PREFIX_PATH=/usr/local/ -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
+cmake ..  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH \
+  -Dfastcdr_DIR=$INSTALL_PATH/lib/cmake/fastcdr/ \
+  -Dfastrtps_DIR=$INSTALL_PATH/share/fastrtps/cmake/ \
+  -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs
 make -j4
 
 cd ../yaml-cpp
 mkdir build
 cd build
-cmake .. -DCMAKE_SYSTEM_PREFIX_PATH=/usr/local/ -DCMAKE_PREFIX_PATH=/usr/local/ -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE="Release"
+cmake ..  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH \
+  -Dfastcdr_DIR=$INSTALL_PATH/lib/cmake/fastcdr/ \
+  -Dfastrtps_DIR=$INSTALL_PATH/share/fastrtps/cmake/ \
+  -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs \
+  -DYAML_BUILD_SHARED_LIBS=ON
 make -j4
 
 cd $CURRENT/build
