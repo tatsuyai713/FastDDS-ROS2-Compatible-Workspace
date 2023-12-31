@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CURRENT=`pwd`
-
+INSTALL_PATH=/opt/fast-dds
 sudo apt install -y qtbase5-dev liblz4-dev libzstd-dev libyaml-cpp-dev
 
 sudo mv /opt/ros/ /opt/ros_tmp/
@@ -43,7 +43,11 @@ cd DDS-Pipe-0.2.0
 cd ddspipe_core
 mkdir build
 cd build
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH
+
 make
 sudo make install
 cd ../../
@@ -51,7 +55,11 @@ cd ../../
 cd ddspipe_participants
 mkdir build
 cd build
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH
+
 make
 sudo make install
 cd ../../
@@ -59,7 +67,11 @@ cd ../../
 cd ddspipe_yaml
 mkdir build
 cd build
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH
+
 make
 sudo make install
 
@@ -74,7 +86,11 @@ cd DDS-Record-Replay-0.2.0
 cd ddsrecorder_participants
 mkdir build
 cd build
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH
+
 make
 sudo make install
 cd ../../
@@ -82,14 +98,22 @@ cd ../../
 cd controller/controller_tool
 mkdir build
 cd build
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH
+
 make
 cd ../../../
 
 cd ddsrecorder_yaml
 mkdir build
 cd build
-cmake ..
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH
+
 make
 sudo make install
 cd ../../
@@ -97,7 +121,13 @@ cd ../../
 cd ddsrecorder
 mkdir build
 cd build
-cmake .. -Dfastcdr_DIR=/usr/local/lib/cmake/fastcdr/ -Dfoonathan_memory_DIR=/usr/local/lib/foonathan_memory/cmake/ -Dfastrtps_DIR=/usr/local/share/fastrtps/cmake/
+cmake ..  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+  -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
+  -DCMAKE_PREFIX_PATH=$INSTALL_PATH \
+  -Dfastcdr_DIR=$INSTALL_PATH/lib/cmake/fastcdr/ \
+  -Dfoonathan_memory_DIR=$INSTALL_PATH/lib/foonathan_memory/cmake/ \
+  -Dfastrtps_DIR=$INSTALL_PATH/share/fastrtps/cmake/
 make
 sudo make install
 
