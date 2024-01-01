@@ -13,7 +13,7 @@
 # limitations under the License.
 
 cmake_minimum_required(VERSION 3.16.3)
-cmake_policy(VERSION 3.16.3...3.20.3)
+# cmake_policy(VERSION 3.16.3...3.20.3)
 
 #####################################################################################
 #                             Interface Library
