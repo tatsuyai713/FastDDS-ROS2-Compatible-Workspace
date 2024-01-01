@@ -6,11 +6,11 @@ OPT_NUM=$#
 cd libraries
 # clean
 if [ ! $OPT_NUM -ne 1 ]; then
-	if [ "clean" = $OPT ]; then
-        rm -rf ./build
-        mkdir ./build
-        exit
-	fi
+  if [ "clean" = $OPT ]; then
+    sudo rm -rf ./build
+    mkdir ./build
+    exit
+  fi
 fi
 
 CURRENT=`pwd`
