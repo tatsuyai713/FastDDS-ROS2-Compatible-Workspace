@@ -78,4 +78,4 @@ install(TARGETS tf2 EXPORT export_tf2
   RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY tf2/ DESTINATION include/${PROJECT_NAME})
+install(DIRECTORY include/tf2 DESTINATION include/${PROJECT_NAME})
