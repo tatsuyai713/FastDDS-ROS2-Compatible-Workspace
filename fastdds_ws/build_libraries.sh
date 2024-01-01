@@ -19,7 +19,6 @@ mkdir build
 cd build
 
 sudo mkdir -p /opt/fast-dds-libs
-sudo chmod 777 /opt/fast-dds-libs
 
 cmake ..  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
