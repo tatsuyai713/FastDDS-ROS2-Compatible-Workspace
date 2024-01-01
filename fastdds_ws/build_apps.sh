@@ -21,7 +21,6 @@ mkdir build
 cd build
 
 mkdir -p ${CURRENT}/install
-chmod 777 -R ${CURRENT}/install
 
 cmake ..  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
