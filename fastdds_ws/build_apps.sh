@@ -21,6 +21,7 @@ mkdir build
 cd build
 
 mkdir -p ${CURRENT}/install
+chmod 777 -R ${CURRENT}/install
 
 cmake ..  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
@@ -34,6 +35,6 @@ make -j4
 
 if [ ! $OPT_NUM -ne 1 ]; then
 	if [ "install" = $OPT ]; then
-                make install
+    make install
 	fi
 fi
