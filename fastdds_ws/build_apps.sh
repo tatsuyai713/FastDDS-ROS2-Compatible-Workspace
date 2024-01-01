@@ -7,12 +7,12 @@ cd apps
 
 # clean
 if [ ! $OPT_NUM -ne 1 ]; then
-	if [ "clean" = $OPT ]; then
-        rm -rf ./build
-        rm -rf ./install
-        mkdir ./build
-        exit
-	fi
+  if [ "clean" = $OPT ]; then
+    sudo rm -rf ./build
+    sudo rm -rf ./install
+    mkdir ./build
+    exit
+  fi
 fi
 
 CURRENT=`pwd`
@@ -21,7 +21,6 @@ mkdir build
 cd build
 
 mkdir -p ${CURRENT}/install
-chmod 777 -R ${CURRENT}/install
 
 cmake ..  -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_SYSTEM_PREFIX_PATH=$INSTALL_PATH \
@@ -34,7 +33,7 @@ make -j4
 
 
 if [ ! $OPT_NUM -ne 1 ]; then
-	if [ "install" = $OPT ]; then
-    make install
-	fi
+  if [ "install" = $OPT ]; then
+    sudo make install
+  fi
 fi
