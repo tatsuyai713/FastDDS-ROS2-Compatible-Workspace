@@ -36,7 +36,7 @@ cd $CURRENT/build
 
 if [ ! $OPT_NUM -ne 1 ]; then
 	if [ "install" = $OPT ]; then
-                make install
+                sudo make install
                 grep 'export LD_LIBRARY_PATH=/opt/fast-dds-libs/lib:$LD_LIBRARY_PATH' ~/.bashrc
                 if [ $? = 0 ]; then
                         echo "LD_LIBRARY_PATH libs are already added"
