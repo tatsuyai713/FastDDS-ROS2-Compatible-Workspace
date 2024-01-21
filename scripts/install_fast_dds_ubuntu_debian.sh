@@ -94,10 +94,10 @@ sudo rm -f gradle-7.5.1-bin.zip
 sed -i -e '/export PATH=$PATH:\/opt\/gradle\/gradle-7.5.1\/bin/d' ~/.bashrc
 echo 'export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin' >> ~/.bashrc
 
-sed -i -e '/export JAVA_HOME=\/usr\/lib\/jvm\/default-java/d' ~/.bashrc
-echo 'export JAVA_HOME=/usr/lib/jvm/default-java' >> ~/.bashrc
+export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+sed -i -e '/export JAVA_HOME=/d' ~/.bashrc
+echo 'export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")' >> ~/.bashrc
 
-export JAVA_HOME=/usr/lib/jvm/default-java
 export PATH=$PATH:/opt/gradle/gradle-7.5.1/bin
 
 # Install Fast-DDS-Gen
