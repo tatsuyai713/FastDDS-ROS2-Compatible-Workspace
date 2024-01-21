@@ -1,3 +1,6 @@
 [submodule "fastdds_ws/libraries/ros-data-types-for-fastdds"]
 	path = fastdds_ws/libraries/ros-data-types-for-fastdds
 	url = https://github.com/tatsuyai713/ros-data-types-for-fastdds.git
+[submodule "rcl_like_wrapper"]
+	path = rcl_like_wrapper
+	url = https://github.com/tatsuyai713/rcl_like_wrapper.git
