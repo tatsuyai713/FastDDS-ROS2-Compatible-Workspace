@@ -62,7 +62,7 @@ private:
         SubListener()
             : matched_(0)
         {
-            subscribe_msg_ = std::make_shared<CustomMesage>();
+            subscribe_msg_ = std::make_shared<CustomMessage>();
         }
 
         ~SubListener() override
@@ -76,7 +76,7 @@ private:
                 eprosima::fastdds::dds::DataReader* reader,
                 const eprosima::fastdds::dds::SubscriptionMatchedStatus& info) override;
 
-        std::shared_ptr<CustomMesage> subscribe_msg_;
+        std::shared_ptr<CustomMessage> subscribe_msg_;
         int matched_;
     }
     listener_;

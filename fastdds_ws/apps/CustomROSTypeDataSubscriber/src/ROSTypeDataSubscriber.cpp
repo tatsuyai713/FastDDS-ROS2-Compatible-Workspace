@@ -55,7 +55,7 @@ ROSTypeDataSubscriber::ROSTypeDataSubscriber()
     , subscriber_(nullptr)
     , topic_(nullptr)
     , reader_(nullptr)
-    , type_(new CustomMesagePubSubType())
+    , type_(new CustomMessagePubSubType())
     , domain_number_(0)
     , topic_name_(std::string("default_topic"))
 {

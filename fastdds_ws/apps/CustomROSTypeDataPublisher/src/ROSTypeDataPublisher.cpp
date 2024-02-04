@@ -64,7 +64,7 @@ ROSTypeDataPublisher::ROSTypeDataPublisher()
     , publisher_(nullptr)
     , topic_(nullptr)
     , writer_(nullptr)
-    , type_(new CustomMesagePubSubType())
+    , type_(new CustomMessagePubSubType())
     , domain_number_(0)
     , topic_name_(std::string("default_topic"))
     , interval_ms_(1000)
@@ -108,7 +108,7 @@ bool ROSTypeDataPublisher::init(std::string config_file_path)
         return false;
     }
 
-    publish_msg_ = std::make_shared<CustomMesage>();
+    publish_msg_ = std::make_shared<CustomMessage>();
 
     DomainParticipantQos pqos = PARTICIPANT_QOS_DEFAULT;
     TopicQos tqos = TOPIC_QOS_DEFAULT;

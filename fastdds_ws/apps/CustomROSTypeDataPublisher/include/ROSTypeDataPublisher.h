@@ -48,7 +48,7 @@ public:
 
 private:
 
-    std::shared_ptr<CustomMesage> publish_msg_;
+    std::shared_ptr<CustomMessage> publish_msg_;
     eprosima::fastdds::dds::DomainParticipant* participant_;
     eprosima::fastdds::dds::Publisher* publisher_;
     eprosima::fastdds::dds::Topic* topic_;
