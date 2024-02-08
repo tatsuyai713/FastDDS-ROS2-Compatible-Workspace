@@ -43,6 +43,22 @@ cd ../fastdds_ws
 ./build_apps.sh
 ```
 
+6. Build and install RCL Like Wrapper
+
+```
+cd ../rcl_like_wrapper
+./build_libraries.sh install
+```
+
+7. Build rcl like wrapper sample apps
+
+```
+./build_apps.sh
+```
+
+Built apps are in apps/build folder.
+
+
 
 # Included Open Source
 
