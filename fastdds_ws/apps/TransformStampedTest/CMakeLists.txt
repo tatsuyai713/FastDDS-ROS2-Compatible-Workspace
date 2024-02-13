@@ -27,6 +27,16 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "QNX")
+    include_directories(/opt/qnx/fast-dds-libs/include 
+                        /opt/qnx/fast-dds-libs/include/optionparser)
+    link_directories(/opt/qnx/fast-dds-libs/lib)
+else()
+    include_directories(/opt/fast-dds-libs/include
+                        /opt/fast-dds-libs/include/optionparser)
+    link_directories(/opt/fast-dds-libs/lib)
+endif()
+
 # Set C++11
 # include(CheckCXXCompilerFlag)
 # if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_CLANG OR
@@ -52,8 +62,6 @@ message(STATUS "Configuring TransformStamped example...")
 file(GLOB DDS_HELLOWORLD_TEST_SOURCES_CXX "*.cxx")
 file(GLOB DDS_HELLOWORLD_TEST_SOURCES_CPP "*.cpp")
 
-include_directories(/opt/fast-dds-libs/include)
-link_directories(/opt/fast-dds-libs/lib)
 add_executable(DDSTransformStampedTest ${DDS_HELLOWORLD_TEST_SOURCES_CXX} ${DDS_HELLOWORLD_TEST_SOURCES_CPP})
 target_compile_definitions(DDSTransformStampedTest PRIVATE
     $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>

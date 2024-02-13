@@ -29,11 +29,17 @@ if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
 endif()
 
-# if(NOT geometry_msgs_FOUND)
-#     find_package(geometry_msgs REQUIRED)
-# endif()
-
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "QNX")
+    include_directories(/opt/qnx/fast-dds-libs/include 
+                        /opt/qnx/fast-dds-libs/include/optionparser)
+    link_directories(/opt/qnx/fast-dds-libs/lib)
+else()
+    include_directories(/opt/fast-dds-libs/include
+                        /opt/fast-dds-libs/include/optionparser)
+    link_directories(/opt/fast-dds-libs/lib)
+endif()
 
 #Check C++11
 # include(CheckCXXCompilerFlag)
@@ -54,9 +60,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.yaml ${CMAKE_CURRENT_BI
 
 include_directories(
     include
-    ${CMAKE_CURRENT_BINARY_DIR}
-    /opt/fast-dds-libs/include)
-link_directories(/opt/fast-dds-libs/lib)
+    ${CMAKE_CURRENT_BINARY_DIR})
 add_executable(CyclicROSDataPublisher ${DDS_SHM_ROS_TYPE_DATA_SOURCES_CXX} ${DDS_SHM_ROS_TYPE_DATA_SOURCES_CPP})
 target_compile_definitions(CyclicROSDataPublisher PRIVATE
     $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>

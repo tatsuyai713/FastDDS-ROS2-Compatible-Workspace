@@ -29,20 +29,17 @@ if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
 endif()
 
-# if(NOT geometry_msgs_FOUND)
-#     find_package(geometry_msgs REQUIRED)
-# endif()
-
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
-set(ROS_DATA_TYPES_PATH /opt/fast-dds-libs/include)
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "QNX")
+    set(ROS_DATA_TYPES_PATH /opt/qnx/fast-dds-libs/include)
+else()
+    set(ROS_DATA_TYPES_PATH /opt/fast-dds-libs/include)
+endif()
 
 file(GLOB_RECURSE Original_IDL_Files
   "${CMAKE_CURRENT_SOURCE_DIR}/*/*.idl"
 )
-# CREATE_IDL_FILES_COMMAND(${Original_IDL_Files})
-# file(GLOB_RECURSE Local_IDL_Files
-#   "${CMAKE_CURRENT_BINARY_DIR}/*.idl"
-# )
 
 if (NOT Original_I${Original_IDL_Files}DL_Files)
     #create an initial version of these files
@@ -76,12 +73,19 @@ file(GLOB ROS_TYPE_DATA_SUBSCRIBER_SOURCES_CXX "src/*.cxx")
 file(GLOB ROS_TYPE_DATA_SUBSCRIBER_SOURCES_CPP "src/*.cpp")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config/config.yaml ${CMAKE_CURRENT_BINARY_DIR}/config/config.yaml  COPYONLY)
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "QNX")
+    include_directories(/opt/qnx/fast-dds-libs/include 
+                        /opt/qnx/fast-dds-libs/include/optionparser)
+    link_directories(/opt/qnx/fast-dds-libs/lib)
+else()
+    include_directories(/opt/fast-dds-libs/include
+                        /opt/fast-dds-libs/include/optionparser)
+    link_directories(/opt/fast-dds-libs/lib)
+endif()
 
 include_directories(
     include
-    ${CMAKE_CURRENT_BINARY_DIR}
-    /opt/fast-dds-libs/include)
-link_directories(/opt/fast-dds-libs/lib)
+    ${CMAKE_CURRENT_BINARY_DIR})
 add_executable(CustomROSTypeDataSubscriber ${ROS_TYPE_DATA_SUBSCRIBER_SOURCES_CXX} ${ROS_TYPE_DATA_SUBSCRIBER_SOURCES_CPP} ${in1_files})
 target_compile_definitions(CustomROSTypeDataSubscriber PRIVATE
     $<$<AND:$<NOT:$<BOOL:${WIN32}>>,$<STREQUAL:"${CMAKE_BUILD_TYPE}","Debug">>:__DEBUG>

@@ -31,6 +31,16 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "QNX")
+    include_directories(/opt/qnx/fast-dds-libs/include 
+                        /opt/qnx/fast-dds-libs/include/optionparser)
+    link_directories(/opt/qnx/fast-dds-libs/lib)
+else()
+    include_directories(/opt/fast-dds-libs/include
+                        /opt/fast-dds-libs/include/optionparser)
+    link_directories(/opt/fast-dds-libs/lib)
+endif()
+
 #Check C++11
 # include(CheckCXXCompilerFlag)
 # if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
