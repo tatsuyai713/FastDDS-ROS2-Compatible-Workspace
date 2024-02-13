@@ -28,7 +28,8 @@ cmake ..  -DCMAKE_BUILD_TYPE=Release \
   -Dfoonathan_memory_DIR=$INSTALL_PATH/lib/foonathan_memory/cmake/ \
   -DCMAKE_INSTALL_PREFIX=/opt/fast-dds-libs \
   -DCMAKE_PREFIX_PATH=$INSTALL_PATH \
-  -DYAML_BUILD_SHARED_LIBS=ON
+  -DYAML_BUILD_SHARED_LIBS=ON \
+  -DYAML_CPP_INSTALL=ON
 make -j4
 
 cd $CURRENT/build
