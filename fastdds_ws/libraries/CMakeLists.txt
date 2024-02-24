@@ -32,6 +32,10 @@ if(NOT fastrtps_FOUND)
     find_package(fastrtps REQUIRED)
 endif()
 
+if(NOT tinyxml2_FOUND)
+    find_package(tinyxml2 REQUIRED)
+endif()
+
 add_subdirectory(optionparser)
 add_subdirectory(ros-data-types-for-fastdds)
 add_subdirectory(tf2)
